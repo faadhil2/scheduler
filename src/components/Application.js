@@ -1,87 +1,44 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios"
 
 import "components/Application.scss";
 import DayList from "./DayList";
 import "components/Appointment"
 import Appointment from "components/Appointment";
+import { getAppointmentsForDay } from "helpers/selectors";
 
-const appointments = [
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  {
-    id: 3,
-    time: "2pm",
-    interview: {
-      student: "John Miller-Jones",
-      interviewer: {
-        id: 2,
-        name: "Tori Malcolm",
-        avatar: "https://i.imgur.com/Nmx0Qxo.png",
-  }
-  }
-},
-{
-  id: 4,
-  time: "3pm",
-  interview: {
-    student: "The Hulk",
-    interviewer: {
-      id: 3,
-      name: "Mildred Nazir",
-      avatar: "https://i.imgur.com/T2WwVfS.png",
-}
-}
-},
-{
-id: 5,
-time: "4pm",
-interview: {
-  student: "Iron Man",
-  interviewer: {
-    id: 4,
-    name: "Sven Jones",
-    avatar: "https://i.imgur.com/twYrpay.jpg",
-}
-}
-}
-];
 
 export default function Application(props) {
-  const [day, setDay] = useState('Monday')
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    // you may put the line below, but will have to remove/comment hardcoded appointments variable
+     appointments: {},
+     interviewers: {}
+  });
 
-  const days = [
-    {
-      id: 1,
-      name: "Monday",
-      spots: 2,
-    },
-    {
-      id: 2,
-      name: "Tuesday",
-      spots: 5,
-    },
-    {
-      id: 3,
-      name: "Wednesday",
-      spots: 0,
-    },
-  ];
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
 
-  const appointmentList = appointments.map(appointment =><Appointment
+  const setDay = day => setState({ ...state, day });
+
+  // const setDays = days => setState({ ...state, days });
+  const setDays = days => setState(prev => ({ ...prev, days }));
+
+  useEffect(()=>{
+    Promise.all([
+      axios.get('http://localhost:8001/api/days').then(request => {
+        return request.data}),
+      axios.get('http://localhost:8001/api/appointments').then(request => {
+        return request.data}),
+      axios.get('http://localhost:8001/api/interviewers').then(request => {
+        return request.data})
+    ]).then((all) => {
+       setState(prev => ({...prev, days: all[0], appointments: all[1], interviewers: all[2] }));
+       console.log(state.appointments)
+      })
+  })
+
+  const appointmentList = dailyAppointments.map(appointment =><Appointment
     key = {appointment.id}
     {...appointment}
     />
@@ -98,8 +55,8 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-            days={days}
-            day={day}
+            days={state.days}
+            day={state.day}
             setDay={setDay}
           />
         </nav>
