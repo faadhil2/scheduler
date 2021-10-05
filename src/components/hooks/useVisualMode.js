@@ -7,15 +7,29 @@ export function useVisualMode(initial) {
 
     function transition(newState, replace= false) {
       if (replace === true){
-         setHistory(history[history.length-1] = newState)
+        setHistory(prev => [...prev.slice(0, prev.length - 1), newState]);
+        //  setHistory(history[history.length-1] = newState)
         //  history[history.length-1] = newState
       }else{
-         setHistory([...history,newState])
+        setHistory(prev => [...prev, newState]);
+        //  setHistory([...history,newState])
         //  history.push(newState)
       }
       setMode(newState)
     }
   
+    // const transition = (updatedMode, replace = false) => {
+    //   if (replace) {
+    //     setHistory((prev) => [...prev.slice(0, prev.length - 1), updatedMode]);
+    //   } else {
+    //     setHistory((prev) => [...prev, updatedMode]);
+    //   }
+    //   setMode(updatedMode);
+    // };
+
+
+
+
     function back() {
       if (history.length - 1 >= 1){
       history.pop()
