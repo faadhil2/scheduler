@@ -9,7 +9,7 @@ export default function Form(props) {
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
   let {interviewers} = props;
-  interviewers = [];
+
 
   const reset = function (){
     setName("")

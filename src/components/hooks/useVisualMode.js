@@ -7,16 +7,15 @@ export function useVisualMode(initial) {
 
     function transition(newState, replace= false) {
       if (replace === true){
-        // setHistory(history[history.length-1] = newState)
-        history[history.length-1] = newState
+         setHistory(history[history.length-1] = newState)
+        //  history[history.length-1] = newState
       }else{
-        // setHistory([...history,newState])
-        history.push(newState)
+         setHistory([...history,newState])
+        //  history.push(newState)
       }
       setMode(newState)
     }
-
-
+  
     function back() {
       if (history.length - 1 >= 1){
       history.pop()
