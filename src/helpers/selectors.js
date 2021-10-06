@@ -48,7 +48,7 @@ export function getInterviewersForDay(state, day) {
 
   for (let element of state.days){
     if (element.name === day){
-      interviewers = element.appointments;
+      interviewers = element.interviewers;
     }
   }
 

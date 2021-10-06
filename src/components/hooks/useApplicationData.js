@@ -49,7 +49,7 @@ useEffect(()=>{
     .then( () => {
       const spotsChangedDays = [...state.days].map( (day) => {
         if(day.name === state.day) { // update the spots for the matching day
-          day.spots -= 1; //Decrease spots by one when we book an interview
+          day.spots --; //Decrease spots by one when we book an interview
           return day;
         } else {return day}
       }) 
@@ -80,7 +80,7 @@ function cancelInterview(id){
     .then( () => {
       const spotsChangedDays = [...state.days].map( (day) => {
         if(day.name === state.day) { // update the spots for the matching day
-          day.spots += 1; //Increase spot by 1 when we cancel an interview
+          day.spots ++; //Increase spot by 1 when we cancel an interview
           return day;
         } else {return day}
       }) 
