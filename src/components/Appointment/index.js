@@ -12,6 +12,7 @@ import {useVisualMode} from "../hooks/useVisualMode"
 
 import "./styles.scss"
 
+// List of Mode Constants
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -27,6 +28,10 @@ export default function Appointment (props){
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
+  // save function : calls bookInterview() with 2 required parameters and an optional parameter(edit)
+  // The edit param is an optional param which indicates whether this save function is applied to
+  // an "edited" component or not.
 
   function save(name, interviewer, edit = false) {
     const interview = {
@@ -45,6 +50,8 @@ export default function Appointment (props){
     }
   }
 
+  // onDelete function : calls cancelInterview() which cancels the interview.
+
   function onDelete(){
     transition(DELETING, true)
     props.cancelInterview(props.id)
@@ -53,6 +60,8 @@ export default function Appointment (props){
     
   }
 
+  // onEdit function : tansitions to the EDIT mode
+  
   function onEdit(){
   transition(EDIT);
   }

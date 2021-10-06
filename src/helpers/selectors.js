@@ -20,7 +20,6 @@ export function getAppointmentsForDay(state, day) {
     }
   }
   return appointmentList
-  // return appointments;
 }
 
 
@@ -65,5 +64,4 @@ export function getInterviewersForDay(state, day) {
   }
 
   return interviewerList
-  // return appointments;
 }
