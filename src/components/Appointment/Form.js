@@ -1,5 +1,4 @@
 import React, {useState} from "react"
-import index from "./index"
 import Button from "components/Button";
 import InterviewerList from "components/InterviewerList";
 
@@ -29,7 +28,12 @@ export default function Form(props) {
     }
     
     setError("");
+
+    if (props.edit === true){
+      props.onSave(name, interviewer, true);
+    }else {
     props.onSave(name, interviewer);
+    }
   }
 
   return (

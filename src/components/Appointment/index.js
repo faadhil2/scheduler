@@ -1,4 +1,4 @@
-import React, {Fragment} from "react"
+import React from "react"
 
 import Header from "./Header";
 import Show from "./Show";
@@ -28,15 +28,21 @@ export default function Appointment (props){
     props.interview ? SHOW : EMPTY
   );
 
-  function save(name, interviewer) {
+  function save(name, interviewer, edit = false) {
     const interview = {
       student: name,
       interviewer
     };
     transition(SAVING, true);
+    if (edit === true){
+      props.bookInterview(props.id, interview, true)
+      .then(()=> transition(SHOW))
+      .catch(()=> transition(ERROR_SAVE, true))
+    }else {
     props.bookInterview(props.id, interview)
     .then(()=> transition(SHOW))
     .catch(()=> transition(ERROR_SAVE, true))
+    }
   }
 
   function onDelete(){
@@ -88,6 +94,7 @@ return(
     value = {props.interview.interviewer.id}
     onSave={save}
     onCancel={() => back()}
+    edit = {true}
   />
   )}
   {mode === ERROR_SAVE && 

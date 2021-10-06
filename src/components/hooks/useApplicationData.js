@@ -31,7 +31,7 @@ useEffect(()=>{
 
 // Book/Create an Interview Appointment Function
 
- function bookInterview(id, interview) {
+ function bookInterview(id, interview, edit = false) {
   const appointment = {
     ...state.appointments[id],
     interview: { ...interview }
@@ -48,7 +48,7 @@ useEffect(()=>{
   return axios.put(`/api/appointments/${id}`, {interview})
     .then( () => {
       const spotsChangedDays = [...state.days].map( (day) => {
-        if(day.name === state.day) { // update the spots for the matching day
+        if(day.name === state.day && edit === false) { // update the spots for the matching day
           day.spots --; //Decrease spots by one when we book an interview
           return day;
         } else {return day}
