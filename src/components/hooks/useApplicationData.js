@@ -8,13 +8,15 @@ export default function useApplicationData() {
 const [state, setState] = useState({
   day: "Monday",
   days: [],
-  // you may put the line below, but will have to remove/comment hardcoded appointments variable
    appointments: {},
    interviewers: {}
 });
 
+// Set the day state
 
 const setDay = day => setState({ ...state, day });
+
+// Import days, appointments, interviewers from the API
 
 useEffect(()=>{
   Promise.all([
@@ -27,6 +29,7 @@ useEffect(()=>{
 }, [])
 
 
+// Book/Create an Interview Appointment Function
 
  function bookInterview(id, interview) {
   const appointment = {
@@ -38,14 +41,11 @@ useEffect(()=>{
     ...state.appointments,
     [id]: appointment
   };
-  //console.log(id, interview);
 
    setState({...state, appointments});
  
 
   return axios.put(`/api/appointments/${id}`, {interview})
-    // .then(() => setState( { ...state,
-    //   appointments}))
     .then( () => {
       const spotsChangedDays = [...state.days].map( (day) => {
         if(day.name === state.day) { // update the spots for the matching day
@@ -63,6 +63,7 @@ useEffect(()=>{
 }
 
 
+// Cancel an Interview Appointment Function
 
 function cancelInterview(id){
   const appointment = {
@@ -75,8 +76,6 @@ function cancelInterview(id){
     [id]: appointment
   };
   return axios.delete(`/api/appointments/${id}`)
-    // .then(() => setState(  {...state,
-    //   appointments}))
     .then( () => {
       const spotsChangedDays = [...state.days].map( (day) => {
         if(day.name === state.day) { // update the spots for the matching day
@@ -92,7 +91,7 @@ function cancelInterview(id){
     })
 };
 
-return { // object to return 
+return { 
   state,
   setDay,
   bookInterview,

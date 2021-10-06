@@ -18,6 +18,7 @@ export default function Application(props) {
   } = useApplicationData();
 
 
+  // Create a Component-List of Appointments
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const appointmentList = dailyAppointments.map(appointment => {
