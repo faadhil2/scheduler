@@ -21,3 +21,12 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Overall App
+
+### Book an Interview by Day of the Week
+
+![Interview Scheduler Day List](/public/images/Interview_scheduler_1.gif  "Interview Scheduler Day List")
+
+### Creating/Editing/Deleting an Interview
+![Create/Edit/Delete Interviews](/public/images/Interview_scheduler_2.gif  "Create/Edit/Delete Interviews")
