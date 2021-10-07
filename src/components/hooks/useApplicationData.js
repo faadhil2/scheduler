@@ -29,9 +29,11 @@ useEffect(()=>{
 }, [])
 
 
-// Book/Create an Interview Appointment Function
+// bookInterview(): Book/Create an Interview Appointment Function
+// Takes in an optional parameter (edit) which indicates whether the spots for
+// the day should be incremented or left the same (if editing an appointment). 
 
- function bookInterview(id, interview, edit = false) {
+function bookInterview(id, interview, edit = false) {
   const appointment = {
     ...state.appointments[id],
     interview: { ...interview }
@@ -63,7 +65,7 @@ useEffect(()=>{
 }
 
 
-// Cancel an Interview Appointment Function
+// cancelInterview(): Cancel an Interview Appointment Function
 
 function cancelInterview(id){
   const appointment = {
